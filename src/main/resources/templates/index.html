@@ -1,9 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="">
+<html xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="http://thymeleaf.org"
+      lang="en">
+
+<!--xmlns:th="http://thymeleaf.org"-->
+<!--xmlns:th="http://www.w3.org/1999/xhtml"-->
+
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>ChiChat</title>
-    <link rel="stylesheet" href="../static/css/main.css" />
+<!--    <link rel="stylesheet" href="../static/css/main.css" />-->
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 <body>
 
@@ -44,6 +51,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="../static/js/main.js"></script>
+<!--<script src="../static/js/main.js"></script>-->
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
 </body>
 </html>
