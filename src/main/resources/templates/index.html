@@ -19,7 +19,7 @@
         <h1 class="title">Welcome to ChiChat!</h1>
         <div class="signed-in-container">
             <form th:action="@{/logout}" method="post">
-                <h4 class="signed-in">You're signed in as:
+                <h4 class="signed-in">You'll appear as:
                     <span id="username" sec:authentication="principal.fullName"></span>
                     <input type="submit" value="Sign Out" class="accent" />
                 </h4>
