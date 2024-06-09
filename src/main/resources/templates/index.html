@@ -16,17 +16,16 @@
 
 <div id="username-page">
     <div class="username-page-container">
-        <h1 class="title">Welcome to ChiChat! <span sec:authentication="principal.fullName"></span></h1>
-        <h2 class="text">Type your username to enter the chatroom</h2>
-        <form id="usernameForm" name="usernameForm">
-            <div class="form-group">
-                <label for="name">Username</label>
-                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-            </div>
-            <div class="form-group">
-                <button type="submit" class="accent username-submit">Start Chatting</button>
-            </div>
-        </form>
+        <h1 class="title">Welcome to ChiChat!</h1>
+        <div class="signed-in-container">
+            <form th:action="@{/logout}" method="post">
+                <h4 class="signed-in">You're signed in as:
+                    <span id="username" sec:authentication="principal.fullName"></span>
+                    <input type="submit" value="Sign Out" class="accent" />
+                </h4>
+            </form>
+        </div>
+        <button id="startChattingButton" class="accent">Start Chatting</button>
     </div>
 </div>
 

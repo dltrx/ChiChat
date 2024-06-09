@@ -2,12 +2,13 @@
 
 var usernamePage = document.querySelector('#username-page');
 var chatPage = document.querySelector('#chat-page');
-var usernameForm = document.querySelector('#usernameForm');
+var startChattingButton = document.querySelector('#startChattingButton');
 var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
 var typingElement = document.querySelector('.typing');
+var usernameElement = document.querySelector('#username');
 
 var stompClient = null;
 var username = null;
@@ -21,7 +22,7 @@ var colors = [
 ];
 
 function connect(event) {
-    username = document.querySelector('#name').value.trim();
+    username = usernameElement.textContent.trim();
 
     if (username) {
         usernamePage.classList.add('hidden');
@@ -40,7 +41,7 @@ function onConnected() {
     stompClient.subscribe('/topic/chat', onMessageReceived);
     stompClient.subscribe('/topic/typing', onTypingReceived);
 
-    stompClient.send("/app/chat.addUser", {}, JSON.stringify({sender: username, type: 'JOIN'}));
+    stompClient.send("/app/chat.addUser", {}, JSON.stringify({ sender: username, type: 'JOIN' }));
 
     connectingElement.classList.add('hidden');
 }
@@ -117,7 +118,7 @@ function getAvatarColor(messageSender) {
 function sendTypingStatus() {
     if (!typing) {
         typing = true;
-        stompClient.send("/app/chat.typing", {}, JSON.stringify({sender: username, typing: true}));
+        stompClient.send("/app/chat.typing", {}, JSON.stringify({ sender: username, typing: true }));
     }
     lastTypingTime = (new Date()).getTime();
 
@@ -131,7 +132,7 @@ function sendTypingStatus() {
 
 function stopTyping() {
     typing = false;
-    stompClient.send("/app/chat.typing", {}, JSON.stringify({sender: username, typing: false}));
+    stompClient.send("/app/chat.typing", {}, JSON.stringify({ sender: username, typing: false }));
 }
 
 function onTypingReceived(payload) {
@@ -151,85 +152,26 @@ function onTypingReceived(payload) {
     } else {
         typingElement.style.display = 'none';
     }
+}
 
-    document.getElementById('fileInput').addEventListener('change', handleFileUpload, true);
-
-    function handleFileUpload(event) {
-        var file = event.target.files[0];
-        if (file && stompClient) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var fileMessage = {
-                    sender: username,
-                    content: e.target.result,
-                    type: 'FILE',
-                    fileName: file.name
-                };
-                stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(fileMessage));
+function handleFileUpload(event) {
+    var file = event.target.files[0];
+    if (file && stompClient) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var fileMessage = {
+                sender: username,
+                content: e.target.result,
+                type: 'FILE',
+                fileName: file.name
             };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    function onMessageReceived(payload) {
-        var message = JSON.parse(payload.body);
-
-        var messageElement = document.createElement('li');
-
-        if (message.type === 'JOIN') {
-            messageElement.classList.add('event-message');
-            message.content = message.sender + ' joined!';
-        } else if (message.type === 'LEAVE') {
-            messageElement.classList.add('event-message');
-            message.content = message.sender + ' left!';
-        } else if (message.type === 'FILE') {
-            messageElement.classList.add('chat-message');
-
-            var avatarElement = document.createElement('i');
-            var avatarText = document.createTextNode(message.sender[0]);
-            avatarElement.appendChild(avatarText);
-            avatarElement.style['background-color'] = getAvatarColor(message.sender);
-
-            messageElement.appendChild(avatarElement);
-
-            var usernameElement = document.createElement('span');
-            var usernameText = document.createTextNode(message.sender);
-            usernameElement.appendChild(usernameText);
-            messageElement.appendChild(usernameElement);
-
-            var linkElement = document.createElement('a');
-            linkElement.href = message.content;
-            linkElement.download = message.fileName;
-            linkElement.textContent = 'Download ' + message.fileName;
-
-            messageElement.appendChild(linkElement);
-        } else {
-            messageElement.classList.add('chat-message');
-
-            var avatarElement = document.createElement('i');
-            var avatarText = document.createTextNode(message.sender[0]);
-            avatarElement.appendChild(avatarText);
-            avatarElement.style['background-color'] = getAvatarColor(message.sender);
-
-            messageElement.appendChild(avatarElement);
-
-            var usernameElement = document.createElement('span');
-            var usernameText = document.createTextNode(message.sender);
-            usernameElement.appendChild(usernameText);
-            messageElement.appendChild(usernameElement);
-
-            var textElement = document.createElement('p');
-            var messageText = document.createTextNode(message.content);
-            textElement.appendChild(messageText);
-
-            messageElement.appendChild(textElement);
-        }
-
-        messageArea.appendChild(messageElement);
-        messageArea.scrollTop = messageArea.scrollHeight;
+            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(fileMessage));
+        };
+        reader.readAsDataURL(file);
     }
 }
 
-usernameForm.addEventListener('submit', connect, true);
+startChattingButton.addEventListener('click', connect, true);
 messageForm.addEventListener('submit', sendMessage, true);
 messageInput.addEventListener('input', sendTypingStatus, true);
+//document.getElementById('fileInput').addEventListener('change', handleFileUpload, true);

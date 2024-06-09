@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="http://thymeleaf.org"
+      lang="en">
+
 <head>
     <meta charset="ISO-8859-1">
     <title>Welcome to the home page</title>
@@ -9,11 +12,33 @@
 </head>
 <body>
 <div class="container text-center">
-    <h1>Welcome to the home page</h1>
-    <h3><a th:href="@{/users}">List of Users</a></h3>
-    <h3><a th:href="@{/register}">Register</a></h3>
-    <h3><a th:href="@{/login}">Login</a></h3>
-    <h3><a th:href="@{/chat}">ChiChat</a></h3>
+    <h1>ChiChat Home Page</h1>
+
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <form th:action="@{/logout}" method="post">
+            <h5 class="signed-in">You're signed in as:
+                <span id="username" sec:authentication="principal.fullName"></span>
+                <input type="submit" value="Sign Out" class="accent" />
+            </h5>
+        </form>
+    </div>
+
+    <!-- Render "List of Users" link only for a particular user -->
+<!--    <div th:if="${#authorization.expression('isAuthenticated()')}">-->
+<!--        <div th:if="${authenticatedUser.email == 'annetarmani@gmail.com'}">-->
+<!--            <h3><a th:href="@{/users}">List of Users</a></h3>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div th:unless="${#authorization.expression('isAuthenticated()')}">
+        <h3><a th:href="@{/register}">Register</a></h3>
+        <h3><a th:href="@{/login}">Login</a></h3>
+    </div>
+
+    <!-- Conditionally render sign-out form if user is signed in -->
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <h3><a th:href="@{/chat}">Chat!</a></h3>
+    </div>
 </div>
 
 </body>
