@@ -25,12 +25,12 @@ public class ChiChatController {
 
     @GetMapping("")
     public String viewHomePage() {
-        return "index_2";
+        return "home";
     }
 
     @GetMapping("/chat")
     public String viewChat() {
-        return "index";
+        return "chat";
     }
 
     @GetMapping("/register")
