@@ -19,28 +19,62 @@ public class CustomErrorController  implements ErrorController {
 
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
-            String errorMessage = "";
-            String quickMessage = "An unknown error occurred.";
+            String detailedMessage;
+            String quickMessage;
 
-            errorMessage = switch (statusCode) {
-                case 404 -> {
-                    quickMessage = "Page not found!";
-                    yield "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.";
+           switch (statusCode) {
+                case 400 -> {
+                    quickMessage = "Bad Request!";
+                    detailedMessage = "The server could not understand the request due to invalid syntax.";
+                }
+                case 401 -> {
+                    quickMessage = "Unauthorized!";
+                    detailedMessage = "You must be authenticated to access this resource.";
                 }
                 case 403 -> {
-                    quickMessage = "Access forbidden!";
-                    yield "You don't have permission to access the requested resource.";
+                    quickMessage = "Forbidden!";
+                    detailedMessage = "You do not have permission to access this resource.";
                 }
+                case 404 -> {
+                    quickMessage = "Not Found!";
+                    detailedMessage = "The requested resource could not be found on this server.";
+                }
+                case 405 -> {
+                    quickMessage = "Method Not Allowed!";
+                    detailedMessage = "The request method is not supported for the requested resource.";
+                }
+               case 408 -> {
+                   quickMessage = "Request Timeout!";
+                   detailedMessage = "The server timed out waiting for the request.";
+               }
                 case 500 -> {
                     quickMessage = "Internal Server Error!";
-                    yield "The server encountered an internal error or misconfiguration and was unable to complete your request.";
-                    // Add more cases as needed
+                    detailedMessage = "The server encountered an internal error or misconfiguration and was unable to complete your request.";
                 }
-                default -> errorMessage;
+               case 501 -> {
+                   quickMessage = "Not Implemented!";
+                   detailedMessage = "The server either does not recognize the request method, or it lacks the ability to fulfill the request.";
+               }
+               case 502 -> {
+                   quickMessage = "Bad Gateway!";
+                   detailedMessage = "The server was acting as a gateway or proxy and received an invalid response from the upstream server.";
+               }
+                case 503 -> {
+                    quickMessage = "Service Unavailable!";
+                    detailedMessage = "The server is currently unavailable (because it is overloaded or down for maintenance).";
+                }
+               case 504 -> {
+                   quickMessage = "Gateway Timeout!";
+                   detailedMessage = "\tThe server was acting as a gateway or proxy and did not receive a timely response from the upstream server.";
+               }
+                default -> {
+                    quickMessage = "Unknown Error!";
+                    detailedMessage = "An unexpected error occurred. Please try again later.";
+                }
             };
 
             mav.addObject("errorCode", statusCode);
-            mav.addObject("errorMessage", errorMessage);
+            mav.addObject("detailedMessage", detailedMessage);
             mav.addObject("quickMessage", quickMessage);
         }
 
