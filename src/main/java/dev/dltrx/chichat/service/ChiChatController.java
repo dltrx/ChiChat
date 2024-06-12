@@ -49,7 +49,18 @@ public class ChiChatController {
     }
 
     @PostMapping("/process_register")
-    public String processRegister(User user) {
+    public String processRegister(User user, Model model) {
+        if (userRepo.findByEmail(user.getEmail()) != null) {
+            // Email is already used, handle this case appropriately
+            String errorCode = "Error";
+            String quickMessage = "Email Already Registered!";
+            String detailedMessage = "User with this email address is already exist. Please login or use a different email address to register.";
+            model.addAttribute("errorCode", errorCode);
+            model.addAttribute("quickMessage", quickMessage);
+            model.addAttribute("detailedMessage", detailedMessage);
+            return "error";
+        }
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
