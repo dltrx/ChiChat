@@ -4,8 +4,6 @@ import dev.dltrx.chichat.service.Message;
 import dev.dltrx.chichat.service.MessageType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -30,8 +28,7 @@ public class ChiChatEventListener {
             log.info("User disconnected: {}", username);
 
             messageSendingOperations.convertAndSend("/topic/chat", Message.builder().type(MessageType.LEAVE).sender(username).build());
-
         }
-
     }
+
 }

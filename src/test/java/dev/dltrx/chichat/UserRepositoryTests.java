@@ -2,6 +2,7 @@ package dev.dltrx.chichat;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import dev.dltrx.chichat.service.Role;
 import dev.dltrx.chichat.service.User;
 import dev.dltrx.chichat.service.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -28,10 +29,11 @@ public class UserRepositoryTests {
     @Test
     public void testCreateUser() {
         User user = new User();
-        user.setEmail("ravikumar@gmail.com");
-        user.setPassword("ravi2020");
-        user.setFirstName("Ravi");
-        user.setLastName("Kumar");
+        user.setEmail("adminmike@gmail.com");
+        user.setPassword("youllneverguessthepassword");
+        user.setFirstName("Admin");
+        user.setLastName("Mike");
+        user.setRole(Role.ADMIN);
 
         User savedUser = repo.save(user);
 

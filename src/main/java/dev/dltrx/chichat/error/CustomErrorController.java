@@ -4,7 +4,6 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -65,7 +64,7 @@ public class CustomErrorController  implements ErrorController {
                 }
                case 504 -> {
                    quickMessage = "Gateway Timeout!";
-                   detailedMessage = "\tThe server was acting as a gateway or proxy and did not receive a timely response from the upstream server.";
+                   detailedMessage = "The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.";
                }
                 default -> {
                     quickMessage = "Unknown Error!";

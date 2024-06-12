@@ -23,12 +23,9 @@
         </form>
     </div>
 
-    <!-- Render "List of Users" link only for a particular user -->
-<!--    <div th:if="${#authorization.expression('isAuthenticated()')}">-->
-<!--        <div th:if="${authenticatedUser.email == 'annetarmani@gmail.com'}">-->
-<!--            <h3><a th:href="@{/users}">List of Users</a></h3>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+        <h3><a th:href="@{/users}">List of Users</a></h3>
+    </div>
 
     <div th:unless="${#authorization.expression('isAuthenticated()')}">
         <h3><a th:href="@{/register}">Register</a></h3>
