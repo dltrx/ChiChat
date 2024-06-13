@@ -21,7 +21,7 @@ public class CustomErrorController  implements ErrorController {
             String detailedMessage;
             String quickMessage;
 
-           switch (statusCode) {
+            switch (statusCode) {
                 case 400 -> {
                     quickMessage = "Bad Request!";
                     detailedMessage = "The server could not understand the request due to invalid syntax.";
@@ -42,30 +42,30 @@ public class CustomErrorController  implements ErrorController {
                     quickMessage = "Method Not Allowed!";
                     detailedMessage = "The request method is not supported for the requested resource.";
                 }
-               case 408 -> {
-                   quickMessage = "Request Timeout!";
-                   detailedMessage = "The server timed out waiting for the request.";
-               }
+                case 408 -> {
+                    quickMessage = "Request Timeout!";
+                    detailedMessage = "The server timed out waiting for the request.";
+                }
                 case 500 -> {
                     quickMessage = "Internal Server Error!";
                     detailedMessage = "The server encountered an internal error or misconfiguration and was unable to complete your request.";
                 }
-               case 501 -> {
-                   quickMessage = "Not Implemented!";
-                   detailedMessage = "The server either does not recognize the request method, or it lacks the ability to fulfill the request.";
-               }
-               case 502 -> {
-                   quickMessage = "Bad Gateway!";
-                   detailedMessage = "The server was acting as a gateway or proxy and received an invalid response from the upstream server.";
-               }
+                case 501 -> {
+                    quickMessage = "Not Implemented!";
+                    detailedMessage = "The server either does not recognize the request method, or it lacks the ability to fulfill the request.";
+                }
+                case 502 -> {
+                    quickMessage = "Bad Gateway!";
+                    detailedMessage = "The server was acting as a gateway or proxy and received an invalid response from the upstream server.";
+                }
                 case 503 -> {
                     quickMessage = "Service Unavailable!";
                     detailedMessage = "The server is currently unavailable (because it is overloaded or down for maintenance).";
                 }
-               case 504 -> {
-                   quickMessage = "Gateway Timeout!";
-                   detailedMessage = "The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.";
-               }
+                case 504 -> {
+                    quickMessage = "Gateway Timeout!";
+                    detailedMessage = "The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.";
+                }
                 default -> {
                     quickMessage = "Unknown Error!";
                     detailedMessage = "An unexpected error occurred. Please try again later.";

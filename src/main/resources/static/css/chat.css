@@ -61,34 +61,35 @@ a {
 }
 
 button {
-    box-shadow: none;
-    border: 1px solid transparent;
-    font-size: 14px;
-    outline: none;
-    line-height: 100%;
-    white-space: nowrap;
-    vertical-align: middle;
-    padding: 0.6rem 1rem;
-    border-radius: 2px;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    min-height: 38px;
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background: #9DD9F3;
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 40px;
+  color: #fff;
+  font-weight: 400;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
 }
 
 button.default {
-    background-color: #77C3EC;
+    background-color: #61ADFD;
     color: #666;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
 }
 
 button.primary {
-    background-color: #77C3EC;
+    background-color: #61ADFD;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
     color: #fff;
 }
 
 button.accent {
-    background-color: #77C3EC;
+    background-color: #61ADFD;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
     color: #fff;
 }
